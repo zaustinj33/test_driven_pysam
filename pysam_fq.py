@@ -1,17 +1,22 @@
 import pysam, sys
 import numpy as np
 
+new_seq = old_seq[{A:T,T:A,G:C,C:G}][::-1]
+
+
 class Fq_stats:
 
     def __init__(self, qual, length, input_fq, seq):
         self.qual = qual
         self.length = length
         self.fq_file = input_fq
-        self.output_fq = input_fq.strip('.fq') +"fq_out.fq"
+        self.output_fq = input_fq.strip('.fq') +"fq_out.fq.gz"
         self.removed_reads = 0
         self.seq = seq
 
     def length_filter(self):
+        """
+        """
         with pysam.FastxFile(self.fq_file) as fh:
             for entry in fh:
                 #print(entry.name)
@@ -43,8 +48,8 @@ class Fq_stats:
 
         return self.match_reads
 
-test = Fq_stats(30,30,"test_1.fq", 'ATAC')
-print(test.seq_finder())
+test = Fq_stats(30,30,"test_1.fq", 'ATAT')
+print(test.qual_filter())
 
 
 
